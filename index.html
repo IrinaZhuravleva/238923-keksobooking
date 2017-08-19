@@ -13,8 +13,8 @@
 </header>
 <main>
   <section class="tokyo">
-    <img src="img/main.jpg" alt="Tokyo" width="1200" height="700">
-    <div class="tokyo__filters-container">
+    <img src="img/main.jpg" alt="Tokyo" width="1200" height="700" class="mytokyo">
+    <div class="tokyo__filters-container mytokyo">
       <form action="#" class="tokyo__filters" autocomplete="off">
         <label><select name="housing_type" id="housing_type" class="tokyo__filter">
           <option value="any" selected>Любой тип жилья</option>
@@ -67,20 +67,20 @@
         </fieldset>
       </form>
     </div>
-    <div class="tokyo__pin-map">
+    <div class="tokyo__pin-map mytokyo">
       <div class="pin  pin__main"><img src="img/main-pin-image.png" alt="Main Pin" class="rounded" width="40" height="44"></div>
     </div>
-    <div id="offer-dialog" class="dialog">
-      <div class="dialog__title"><img src="img/avatars/user01.png" alt="Avatar" width="70" height="70">
+    <div id="offer-dialog" class="dialog mytokyo">
+      <div class="dialog__title myoffer"><img src="img/avatars/user01.png" alt="Avatar" width="70" height="70">
         <a href="#" class="dialog__close"><img src="img/close.svg" alt="close" width="22" height="22"></a>
       </div>
-      <div class="dialog__panel">
+      <div class="dialog__panel myoffer">
         <h3 class="lodge__title">Уютное гнездышко для молодоженов</h3>
         <p class="lodge__address">102-0082 Tōkyō-to, Chiyoda-ku, Ichibanchō, 14−3</p>
         <h3 class="lodge__price">5200&#x20bd;/ночь</h3>
         <h4 class="lodge__type">Квартира</h4>
         <p class="lodge__rooms-and-guests">2 комнаты для 3 гостей</p>
-        <p class="lodge__checkin-time">Заед после 14:00, выезд до 10:00</p>
+        <p class="lodge__checkin-time">Заезд после 14:00, выезд до 10:00</p>
         <div class="lodge__features">
           <span class="feature__image  feature__image--wifi"></span>
           <span class="feature__image  feature__image--dishwasher"></span>
@@ -89,9 +89,9 @@
           <span class="feature__image  feature__image--elevator"></span>
           <span class="feature__image  feature__image--conditioner"></span>
         </div>
-        <p class="lodge__description">Великолепная квартира-студия в центре Токио. Подходит как туристам, так и
+        <p class="lodge__description myoffer">Великолепная квартира-студия в центре Токио. Подходит как туристам, так и
           бизнесменам. Квартира полностью укомплектована и имеет свежий ремонт.</p>
-        <div class="lodge__photos">
+        <div class="lodge__photos myoffer">
           <img src="https://placehold.it/52x42" alt="Lodge photo" width="52" height="42">
           <img src="https://placehold.it/52x42" alt="Lodge photo" width="52" height="42">
           <img src="https://placehold.it/52x42" alt="Lodge photo" width="52" height="42">
@@ -277,6 +277,8 @@
     </div>
   </div>
 </template>
+
+<script type="text/javascript" src="js/map.js"></script>
 
 </body>
 </html>
