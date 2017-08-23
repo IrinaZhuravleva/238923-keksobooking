@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Ирина Журавлева](https://up.htmlacademy.ru/javascript/10/user/238923).
-* Наставник: `Неизвестно`.
+* Наставник: `Руфат Хасларов`.
 
 ---
 
