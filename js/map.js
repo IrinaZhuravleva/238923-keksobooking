@@ -11,6 +11,9 @@ var TITLES = ['Большая уютная квартира',
 var ACCOMMODATION_TYPE = ['flat', 'house', 'bungalo'];
 var TIME = ['12:00', '13:00', '14:00'];
 var FEATURES_LIST = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var isDialogOpen = false;
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
 function getRandomNumber(min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -48,6 +51,7 @@ function getHumanReadableType(type) {
   return typeString;
 };
 
+// Заполнение массива возможных вариантов
 var infoBookings = [];
 for (var i = 0; i < TITLES.length; i++) {
   var locationX = getRandomNumber(300, 900);
@@ -55,6 +59,7 @@ for (var i = 0; i < TITLES.length; i++) {
   var booking = {
     author: {
       avatar: 'img/avatars/user0' + (i + 1) + '.png'
+      // avatar: infoBookings[i].author.avatar
     },
     offer: {
       title: getRandomElementFromArray(TITLES),
@@ -78,16 +83,16 @@ for (var i = 0; i < TITLES.length; i++) {
   infoBookings.push(booking);
 }
 
+// Копирование по шаблону и вставка пинов на карту
 var firstPin = document.querySelector('.tokyo__pin-map');
 var fragmentPin = document.createDocumentFragment();
-
 for (var n = 0; n < infoBookings.length; n++) {
   var pinImage = document.querySelector('.pin__main');
   var pinElement = pinImage.cloneNode();
 
   pinElement.className = 'pin';
+  pinElement.setAttribute('tabindex', n + 1)
   pinElement.classList.add('pin--' + n );
-
   pinElement.style.left = infoBookings[n].location.x + 'px';
   pinElement.style.top = infoBookings[n].location.y + 'px';
   pinElement.innerHTML = '<img src="' + infoBookings[n].author.avatar + '" class="rounded" width="40" height="40">';
@@ -96,23 +101,32 @@ for (var n = 0; n < infoBookings.length; n++) {
 firstPin.appendChild(fragmentPin);
 
 
+
 var fragmentAvatar = document.createDocumentFragment();
 var firstAvatar = document.querySelector('.dialog__title');
 
 document.querySelector('.dialog__title > img').remove();
-
+for (var n = 0; n < infoBookings.length; n++) {
 var avatarImage = document.querySelector('.dialog__title');
 var avatarElement = avatarImage.cloneNode();
 avatarElement.className = ('img');
-avatarElement.innerHTML = '<img src="' + booking.author.avatar + '" width="70" height="70">';
+avatarElement.classList.add('image--' + n );
+avatarElement.classList.add('hidden');//
+avatarElement.innerHTML = '<img src="' + infoBookings[n].author.avatar + '" width="70" height="70">';
 fragmentAvatar.appendChild(avatarElement);
-
+}
 firstAvatar.appendChild(fragmentAvatar);
+//firstAvatar.classList.add('hidden');//как бы им всем присвоить хидден, а потом через js этот хидден снять!!!!!!!!!!!!
 
 
+// Генерация панелей
 var renderInfoBooking = function (supperBooking, i) {
   var template = document.querySelector('#lodge-template');
   var element = template.content.cloneNode(true);
+
+  element.querySelector('.dialog__panel').classList.add('dialog--' + i)
+  element.querySelector('.dialog__panel').classList.add('hidden')
+
   element.querySelector('.lodge__title').textContent = supperBooking.offer.title;
   element.querySelector('.lodge__address').textContent = supperBooking.offer.address;
   element.querySelector('.lodge__price').textContent = supperBooking.offer.price + '&#x20bd;/ночь';
@@ -121,7 +135,7 @@ var renderInfoBooking = function (supperBooking, i) {
   element.querySelector('.lodge__checkin-time').textContent = 'Заезд после ' + supperBooking.offer.checkin + ', выезд до ' + supperBooking.offer.checkout;
 
   var featuresListHTML = '';
-  for (var j = 0; j < booking.offer.features.length; j++) {
+  for (var j = 0; j < supperBooking.offer.features.length; j++) {
     featuresListHTML += '<span class="feature__image feature__image--' + supperBooking.offer.features[j] + '"></span>';
   }
 
@@ -140,7 +154,145 @@ for (var i = 0; i < infoBookings.length; i++) {
   fragment.appendChild(bookingDialog);
 }
 
-
+// Удаление базовой панели
 document.querySelector('.dialog__panel').remove();
 document.querySelector('.dialog').appendChild(fragment);
 
+
+var dia = document.querySelector(".dialog");
+dia.classList.add("hidden");
+
+var selectedDiv;
+var parentPin = document.querySelector('.tokyo__pin-map');
+
+parentPin.addEventListener('keydown', function(event) {
+  highlight(event.target);
+})
+
+parentPin.onclick = function (event) {
+  var target = event.target;
+  while (target != parentPin) {
+    if (target.tagName == 'DIV') {
+      highlight(target);
+      return;
+    } 
+    target = target.parentNode;
+  }
+};
+
+function highlight (node) {
+  
+  if (selectedDiv) {
+    selectedDiv.classList.remove('pin--active');
+  }
+  selectedDiv = node;
+  selectedDiv.classList.add('pin--active');
+
+  hideAllAvatarPanels()
+  hideAllDialogPanels()
+
+  if (selectedDiv.className == "pin pin--0 pin--active") {
+    document.querySelector('.dialog--0').classList.remove('hidden');
+    document.querySelector('.image--0').classList.remove('hidden')
+  }
+  if (selectedDiv.className == "pin pin--1 pin--active") {
+    document.querySelector('.dialog--1').classList.remove('hidden');
+    document.querySelector('.image--1').classList.remove('hidden')
+  }
+  if (selectedDiv.className == "pin pin--2 pin--active") {
+    document.querySelector('.dialog--2').classList.remove('hidden');
+    document.querySelector('.image--2').classList.remove('hidden')
+  }
+  if (selectedDiv.className == "pin pin--3 pin--active") {
+    document.querySelector('.dialog--3').classList.remove('hidden');
+    document.querySelector('.image--3').classList.remove('hidden')
+  }
+  if (selectedDiv.className == "pin pin--4 pin--active") {
+    document.querySelector('.dialog--4').classList.remove('hidden');
+    document.querySelector('.image--4').classList.remove('hidden')
+  }
+  if (selectedDiv.className == "pin pin--5 pin--active") {
+    document.querySelector('.dialog--5').classList.remove('hidden');
+    document.querySelector('.image--5').classList.remove('hidden')
+  }
+  if (selectedDiv.className == "pin pin--6 pin--active") {
+    document.querySelector('.dialog--6').classList.remove('hidden');
+    document.querySelector('.image--6').classList.remove('hidden')
+  }
+  if (selectedDiv.className == "pin pin--7 pin--active") {
+    document.querySelector('.dialog--7').classList.remove('hidden');
+    document.querySelector('.image--7').classList.remove('hidden')
+  }
+  
+  document.querySelector('.dialog').classList.remove('hidden')
+
+}
+
+function disableAllPins () {
+  var pins = document.querySelectorAll('.pin');
+  for (var index = 0; index < pins.length; index++ ) {
+    pins[index].classList.toggle('pin--active', false);
+  }
+}
+
+function hideAllDialogPanels () {
+  var dialogPanels = document.querySelectorAll('.dialog__panel');
+  for (var index = 0; index < dialogPanels.length; index++ ) {
+    dialogPanels[index].classList.toggle('hidden', true);  
+  }
+}
+// не работает
+
+function hideAllAvatarPanels () {
+  var dialogAvatars = document.querySelectorAll('.dialog__title .img');
+  for (var index = 0; index < dialogAvatars.length; index++ ) {
+    dialogAvatars[index].classList.toggle('hidden', true);
+  }
+ }
+
+var closePopup = document.querySelector('.dialog__close');
+
+closePopup.addEventListener('click', function(event) {
+  disableActivePin()
+});
+
+function disableActivePin () {
+  var dia = document.querySelector(".dialog");
+  event.preventDefault();
+  dia.classList.add("hidden");
+  disableAllPins()
+}
+
+window.addEventListener('keydown', function (event) {
+  if (event.keyCode === ESC_KEYCODE) {
+    disableActivePin();
+  }
+})
+
+
+
+
+// isDialogOpen
+
+// var allPinOpen = document.querySelectorAll('.pin');
+// allPinOpen.addEventListener('keydown', function(event) {
+//   if(event.keyCode === 13) {
+//     dia.classList.remove("hidden");//почему не работает
+//   }
+// });
+
+// window.addEventListener("keydown", function(event) {
+//     if (event.keyCode === 27) {
+//       if (pop.classList.contains("active-header-show")) {
+//         pop.classList.remove("active-header-show");
+//       }
+//     }
+//   });
+
+// document.querySelector('.pin').classList.remove('pin--active');
+
+// closePopup.addEventListener('keydown', function(evt) {
+//   if (evt.keyCode === 13) {
+//     dia.classList.add("hidden");
+//   }
+// });
