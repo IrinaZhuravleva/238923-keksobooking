@@ -144,7 +144,7 @@ var renderInfoBooking = function (supperBooking, i) {
 
 var fragment = document.createDocumentFragment();
 for (var i = 0; i < infoBookings.length; i++) {
-  var currentBooking = infoBookings[d];
+  var currentBooking = infoBookings[i];
   var bookingDialog = renderInfoBooking(currentBooking, i); //d изменено на i
   fragment.appendChild(bookingDialog);
 }
