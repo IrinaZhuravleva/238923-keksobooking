@@ -90,6 +90,7 @@ for (var n = 0; n < infoBookings.length; n++) {
   pinElement.className = 'pin';
   pinElement.setAttribute('tabindex', n + 1);
   pinElement.classList.add('pin--' + n);
+  pinElement.dataset.pinId = n;
   pinElement.style.left = infoBookings[n].location.x + 'px';
   pinElement.style.top = infoBookings[n].location.y + 'px';
   pinElement.innerHTML = '<img src="' + infoBookings[n].author.avatar + '" class="rounded" width="40" height="40">';
@@ -173,50 +174,25 @@ parentPin.onclick = function (event) {
   }
 };
 
+
 function highlight(node) {
   if (selectedDiv) {
     selectedDiv.classList.remove('pin--active');
   }
+
   selectedDiv = node;
   selectedDiv.classList.add('pin--active');
+  var selectedPin = node.dataset.pinId
 
   hideAllAvatarPanels();
   hideAllDialogPanels();
 
-  if (selectedDiv.className === 'pin pin--0 pin--active') {
-    document.querySelector('.dialog--0').classList.remove('hidden');
-    document.querySelector('.image--0').classList.remove('hidden');
-  }
-  if (selectedDiv.className === 'pin pin--1 pin--active') {
-    document.querySelector('.dialog--1').classList.remove('hidden');
-    document.querySelector('.image--1').classList.remove('hidden');
-  }
-  if (selectedDiv.className === 'pin pin--2 pin--active') {
-    document.querySelector('.dialog--2').classList.remove('hidden');
-    document.querySelector('.image--2').classList.remove('hidden');
-  }
-  if (selectedDiv.className === 'pin pin--3 pin--active') {
-    document.querySelector('.dialog--3').classList.remove('hidden');
-    document.querySelector('.image--3').classList.remove('hidden');
-  }
-  if (selectedDiv.className === 'pin pin--4 pin--active') {
-    document.querySelector('.dialog--4').classList.remove('hidden');
-    document.querySelector('.image--4').classList.remove('hidden');
-  }
-  if (selectedDiv.className === 'pin pin--5 pin--active') {
-    document.querySelector('.dialog--5').classList.remove('hidden');
-    document.querySelector('.image--5').classList.remove('hidden');
-  }
-  if (selectedDiv.className === 'pin pin--6 pin--active') {
-    document.querySelector('.dialog--6').classList.remove('hidden');
-    document.querySelector('.image--6').classList.remove('hidden');
-  }
-  if (selectedDiv.className === 'pin pin--7 pin--active') {
-    document.querySelector('.dialog--7').classList.remove('hidden');
-    document.querySelector('.image--7').classList.remove('hidden');
-  }
+  document.querySelector('.dialog--' + selectedPin).classList.remove('hidden');
+  document.querySelector('.image--' + selectedPin).classList.remove('hidden');
+
   document.querySelector('.dialog').classList.remove('hidden');
 }
+
 
 function disableAllPins() {
   var pins = document.querySelectorAll('.pin');
