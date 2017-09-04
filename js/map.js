@@ -32,11 +32,11 @@
 
   function getHumanReadableType(type) {
     var typeString = '';
-    if (type === ACCOMMODATION_TYPE[0]) {
+    if (type === window.ACCOMMODATION_TYPE[0]) {
       typeString = 'квартира';
-    } else if (type === ACCOMMODATION_TYPE[1]) {
+    } else if (type === window.ACCOMMODATION_TYPE[1]) {
       typeString = 'дом';
-    } else if (type === ACCOMMODATION_TYPE[2]) {
+    } else if (type === window.ACCOMMODATION_TYPE[2]) {
       typeString = 'бунгало';
     }
 
@@ -45,9 +45,9 @@
 
 
   var fragment = document.createDocumentFragment();
-  for (var i = 0; i < infoBookings.length; i++) {
-    var currentBooking = infoBookings[i];
-    var bookingDialog = renderInfoBooking(currentBooking, i); // d изменено на i
+  for (var i = 0; i < window.infoBookings.length; i++) {
+    var currentBooking = window.infoBookings[i];
+    var bookingDialog = renderInfoBooking(currentBooking, i);
     fragment.appendChild(bookingDialog);
   }
 
@@ -56,15 +56,47 @@
   document.querySelector('.dialog').appendChild(fragment);
 
 
-  var dia = document.querySelector('.dialog');
-  dia.classList.add('hidden');
+  var tokyo = document.querySelector('.tokyo');
+  var pin = tokyo.querySelector('.pin');
 
-  var closePopup = document.querySelector('.dialog__close');
 
-  closePopup.addEventListener('click', function () {
-    disableActivePin();
+  tokyo.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
+    var startCoords = {
+      x: evt.clientX,
+      y: evt.clientY
+    };
+
+    var onMouseMove = function (moveEvt) {
+      moveEvt.preventDefault();
+
+      var shift = {
+        x: startCoords.x - moveEvt.clientX,
+        y: startCoords.y - moveEvt.clientY
+      };
+
+      startCoords = {
+        x: moveEvt.clientX,
+        y: moveEvt.clientY
+      };
+
+      pin.style.top = (pin.offsetTop - shift.y) + 'px';
+      pin.style.left = (pin.offsetLeft - shift.x) + 'px';
+
+      var address = document.getElementById('address');
+      address.value = 'x: ' + (pin.offsetLeft - shift.x - 28) + ', ' + 'y: ' + (pin.offsetTop - shift.y + 75);
+    };
+
+    var onMouseUp = function (upEvt) {
+      upEvt.preventDefault();
+
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', onMouseUp);
+    };
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
   });
 
 })();
-
 
