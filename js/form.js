@@ -9,13 +9,13 @@
   var title = document.getElementById('title');
   var type = document.getElementById('type');
   var price = document.getElementById('price');
-  type.addEventListener('change', function (event) {
+  type.addEventListener('change', function () {
     if (type.value === 'bungalo') {
       price.value = '0';
     } else if (type.value === 'flat') {
       price.value = '1000';
     } else if (type.value === 'house') {
-      price.value = '5000'; 
+      price.value = '5000';
     } else {
       price.value = '10000';
     }
