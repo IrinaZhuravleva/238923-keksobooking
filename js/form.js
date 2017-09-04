@@ -4,7 +4,7 @@
 (function () {
   var timeOut = document.getElementById('timeout');
   window.timeOut = timeOut;
-  var capacity = document.getElementById('capacity');
+  // var capacity = document.getElementById('capacity');
   var address = document.getElementById('address');
   var title = document.getElementById('title');
   var type = document.getElementById('type');

@@ -55,119 +55,9 @@
   document.querySelector('.dialog__panel').remove();
   document.querySelector('.dialog').appendChild(fragment);
 
-  // Сначала найдем тот элемент за который будем тащить наш диалог pinsDraggable[k]Map-user-pic и обработаем событие mousedown — начала перетаскивания нашего диалога
 
-  // var pinHandle = document.querySelector('.pin');
-  // var pinsDraggable[k]Map = document.querySelector('body');
-  // var draggedItem = null;
-
-  // var pinsDraggable = document.querySelectorAll('.pin');
-
-  // for (var k = 0; k < pinsDraggable.length; k++) {
-  //   pinsDraggable[k].addEventListener('mousedown', function (evt) {
-  //     // evt.preventDefault()
-  //     // evt.preventDefault();
-
-  //     // Запомним координаты точки с которой мы начали перемещать pin
-  //     var startCoords = {
-  //       x: evt.clientX,
-  //       y: evt.clientY
-  //     };
-
-  //     evt.currentTarget.addEventListener('dragstart', function (startEvt) {
-  //       if (startEvt.currentTarget.tagName.toLowerCase() === 'div') {
-  //         draggedItem = evt.currentTarget;
-  //         // evt.dataTransfer.setData('text/plain', evt.currentTarget.alt);
-  //       }
-  //     });
-
-  //     evt.currentTarget.addEventListener('drag', function (moveEvt) {
-  //       console.log('x:' + moveEvt.clientX + ' y:' + moveEvt.clientY)
-
-        
-  //       var shift = {
-  //         x: moveEvt.clientX - (moveEvt.currentTarget.clientWidth / 2),
-  //         y: moveEvt.clientY - (moveEvt.currentTarget.clientHeight - 100)
-  //       }
-  //       moveEvt.currentTarget.style.left = shift.x + 'px';
-  //       moveEvt.currentTarget.style.top = shift.y + 'px';
-
-  //     });
-
-  //     evt.currentTarget.addEventListener('dragend', function (moveEvt) {
-  //       var shift = {
-  //         x: moveEvt.clientX - (moveEvt.currentTarget.clientWidth / 2),
-  //         y: moveEvt.clientY - (moveEvt.currentTarget.clientHeight / 2)
-  //       }
-  //       moveEvt.currentTarget.style.left = shift.x + 'px';
-  //       moveEvt.currentTarget.style.top = shift.y + 'px';
-
-  //     });
-
-      
-  //   });
-  // }
-
-
-///
-
-
-
-
-
-// var pinsDraggable = document.querySelectorAll('.pin');
-
-// for (var k = 0; k < pinsDraggable.length; k++) { // цикл for
-// var pinDraggable = document.querySelector('.pinsDraggable[k]')
-
-//   pinDraggable.addEventListener('mousedown', function (evt) {
-
-
-//   evt.preventDefault(); // это отменяет автоматическое перетаскивание квадратной картинки пина
-  
-//   var startCoords = { // Запомним координаты точки с которой мы начали перемещать
-//       x: evt.clientX,
-//       y: evt.clientY
-//     };
-
-//   var onMouseMove = function (moveEvt) {
-//     moveEvt.preventDefault();
-
-//     var shift = {
-//       x: startCoords.x - moveEvt.clientX,
-//       y: startCoords.y - moveEvt.clientY
-//     };
-
-//     startCoords = {
-//       x: moveEvt.clientX,
-//       y: moveEvt.clientY
-//     };
-
-//    pinDraggable.style.top = (pinDraggable.offsetTop - shift.y) + 'px';
-//     pinDraggable.style.left = (pinDraggable.offsetLeft - shift.x) + 'px';
-
-      
-//   };
-
-//   var onMouseUp = function (upEvt) {
-//     upEvt.preventDefault();
-
-//     document.removeEventListener('mousemove', onMouseMove);
-//     document.removeEventListener('mouseup', onMouseUp);
-//   };
-
-//   document.addEventListener('mousemove', onMouseMove);
-//   document.addEventListener('mouseup', onMouseUp);
-// });
-
-
-// }; // всё происходит внутри цикла for
-
-
-// КОД НИЖЕ ШИКАРНО РАБОТАЕТ
-
-var tokyo = document.querySelector('.tokyo');
-var pin = tokyo.querySelector('.pin');
+  var tokyo = document.querySelector('.tokyo');
+  var pin = tokyo.querySelector('.pin');
 
 
   tokyo.addEventListener('mousedown', function (evt) {
@@ -190,12 +80,11 @@ var pin = tokyo.querySelector('.pin');
         y: moveEvt.clientY
       };
 
-       pin.style.top = (pin.offsetTop - shift.y) + 'px';
-       pin.style.left = (pin.offsetLeft - shift.x) + 'px';
+      pin.style.top = (pin.offsetTop - shift.y) + 'px';
+      pin.style.left = (pin.offsetLeft - shift.x) + 'px';
 
-    var address = document.getElementById('address');
-     
-     address.value = 'координата X ' + (pin.offsetLeft - shift.x - 28) + ', ' + 'координата Y ' + (pin.offsetTop - shift.y + 75);
+      var address = document.getElementById('address');
+      address.value = 'x: ' + (pin.offsetLeft - shift.x - 28) + ', ' + 'y: ' + (pin.offsetTop - shift.y + 75);
     };
 
     var onMouseUp = function (upEvt) {
@@ -209,5 +98,5 @@ var pin = tokyo.querySelector('.pin');
     document.addEventListener('mouseup', onMouseUp);
   });
 
- })();
+})();
 
