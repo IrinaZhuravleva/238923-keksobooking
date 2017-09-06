@@ -20,48 +20,14 @@
   }
   firstPin.appendChild(fragmentPin);
 
-  var selectedDiv;
-  var parentPin = document.querySelector('.tokyo__pin-map');
-
-  parentPin.addEventListener('keydown', function (event) {
-    highlight(event.target);
-  });
-
-  parentPin.onclick = function (event) {
-    var target = event.target;
-    while (target !== parentPin) {
-      if (target.tagName === 'DIV') {
-        highlight(target);
-        return;
-      }
-      target = target.parentNode;
-    }
-  };
-
-
-  function highlight(node) {
-    if (selectedDiv) {
-      selectedDiv.classList.remove('pin--active');
-    }
-
-    selectedDiv = node;
-    selectedDiv.classList.add('pin--active');
-    var selectedPin = node.dataset.pinId;
-    hideAllAvatarPanels();
-    hideAllDialogPanels();
-
-    document.querySelector('.dialog--' + selectedPin).classList.remove('hidden');
-    document.querySelector('.image--' + selectedPin).classList.remove('hidden');
-
-    document.querySelector('.dialog').classList.remove('hidden');
-  }
-
   function hideAllDialogPanels() {
     var dialogPanels = document.querySelectorAll('.dialog__panel');
     for (var index = 0; index < dialogPanels.length; index++) {
       dialogPanels[index].classList.toggle('hidden', true);
     }
   }
+  window.hideAllDialogPanels = hideAllDialogPanels;
+
 
   function hideAllAvatarPanels() {
     var dialogAvatars = document.querySelectorAll('.dialog__title .img');
@@ -69,6 +35,7 @@
       dialogAvatars[index].classList.toggle('hidden', true);
     }
   }
+  window.hideAllAvatarPanels = hideAllAvatarPanels;
 
   function disableAllPins() {
     var pins = document.querySelectorAll('.pin');

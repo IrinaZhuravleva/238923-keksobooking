@@ -60,7 +60,7 @@
   var pin = tokyo.querySelector('.pin');
 
 
-  tokyo.addEventListener('mousedown', function (evt) {
+  pin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     var startCoords = {
       x: evt.clientX,
