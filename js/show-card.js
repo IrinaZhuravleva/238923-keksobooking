@@ -33,7 +33,7 @@
     window.hideAllDialogPanels();
 
     document.querySelector('.dialog--' + selectedPin).classList.remove('hidden');
-    document.querySelector('.image--' + selectedPin).classList.remove('hidden');
+    document.querySelector('.dialog__title img').src = window.data[selectedPin].author.avatar;
 
     document.querySelector('.dialog').classList.remove('hidden');
   }

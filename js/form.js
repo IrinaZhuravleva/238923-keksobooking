@@ -46,4 +46,20 @@
     }
   });
 
+  var checkinTime = document.querySelector('#timein');
+  var checkoutTime = document.querySelector('#timeout');
+  var apartmentType = document.querySelector('#type');
+  var pricePerNight = document.querySelector('#price');
+
+  var syncValues = function (element, value) {
+    element.value = value;
+  };
+
+  var syncValueWithMin = function (element, value) {
+    element.min = value;
+  };
+
+  window.synchronizeFields(apartmentType, pricePerNight, ['apartment', 'shack', 'palace'], [1000, 0, 10000], syncValueWithMin);
+  window.synchronizeFields(checkinTime, checkoutTime, ['12:00', '13:00', '14:00'], ['12:00', '13:00', '14:00'], syncValues);
+
 })();
